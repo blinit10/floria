@@ -1,0 +1,418 @@
+{% extends 'principal/base.html' %}
+{% load static %}
+{% block extra-estilos %}
+    <style>
+        .call-to-action {
+            background-image: url(/media/{{ banner.imagen }});
+            background-repeat: no-repeat;
+            background-position: top;
+            background-size: cover;
+            background-attachment: fixed;
+            position: relative;
+        }
+    </style>
+{% endblock %}
+{% block contenido %}
+    <main>
+
+        <section class="hero" id="section_1">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-5 col-12 m-auto">
+                        <div class="hero-text">
+
+                            <h1 class="text-white mb-4">Recurso Educativo</h1>
+
+                            <div class="d-flex justify-content-center align-items-center">
+                                <span id="fechaactual" class="date-text"></span>
+
+                                <span class="location-text">UCI</span>
+                            </div>
+
+                            <a href="#section_2" class="custom-link bi-arrow-down arrow-icon"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-wrap">
+                <video autoplay="" loop="" muted="" class="custom-video" poster="">
+                    <source src="{% static 'principal/videos/pexels-pavel-danilyuk-8716790.mp4' %}" type="video/mp4">
+
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+
+        <section class="about section-padding" id="section_2">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-10 col-12">
+                        <h2 class="mb-4">Antecedentes de la <u class="text-info">Informática</u></h2>
+                    </div>
+
+                    <div class="col-lg-12 col-12" style="">
+                        {{ antecedentes|truncatewords:150 }}
+                        <br>
+                        <a class="custom-btn btn custom-link mt-3" href="{% url 'antecedentes_detalles ' %}">Leer
+                            más</a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <section class="speakers section-padding" id="section_3">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-6 col-12 d-flex flex-column justify-content-center align-items-center">
+                        <div class="speakers-text-info">
+                            <h2 class="mb-4">Personalidad<u class="text-info">es</u></h2>
+
+                            <p> Ninguno de los dispositivos informáticos actuales sería posible sin el trabajo de miles
+                                de personas que durante
+                                años han contribuido a la evolución de la tecnología tal y como la conocemos hoy en
+                                día.</p>
+                        </div>
+                    </div>
+
+                    <div data-toggle="modal" data-target="#modalcentralPrimero" id="primero" class="col-lg-6 col-12">
+                        <div class="speakers-thumb">
+                            <img src="/media/{{ primero.foto }}"
+                                 class="img-fluid speakers-image" alt="">
+
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="modalcentralPrimero" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-md  modal-dialog-centered" role="document">
+                                    <div class="modal-content rounded-0">
+                                        <div class="modal-body py-0">
+
+
+                                            <div class="d-block main-content">
+                                                <img src="/media/{{ primero.foto }}" alt="Image" class="img-fluid"
+                                                     style="background-color: #b2fcff;">
+                                                <div class="content-text p-4">
+
+                                                    <h3 class="mb-4">{{ primero.nombre }}</h3>
+                                                    <p class="mb-4">{{ primero.descripcion }}</p>
+                                                    <div class="d-flex">
+                                                        <div class="ml-auto">
+                                                            <a href="#primero"
+                                                               class="btn btn-primary px-4">Entendido!</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="speakers-info">
+
+
+                                <h5 class="speakers-title mb-0">{{ primero.nombre }}</h5>
+
+                                <p class="speakers-text mb-0">{{ primero.fecha_nacimiento }}
+                                    - {{ primero.fecha_muerte }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-12">
+
+                        <div class="row personalidades">
+                            {% for ultimo in ultimos %}
+                                <div id="ultimo{{ ultimo.pk }}" data-toggle="modal" data-target="#modalcentral{{ ultimo.pk }}"
+                                     style="cursor: pointer" class="col-lg-3 col-md-6 col-12">
+                                    <div class="speakers-thumb speakers-thumb-small">
+                                        <img src="/media/{{ ultimo.foto }}"
+                                             class="img-fluid speakers-image" alt=""
+                                             style="width: 300px; height: 300px ">
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="modalcentral{{ ultimo.pk }}" tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-md  modal-dialog-centered" role="document">
+                                                <div class="modal-content rounded-0">
+                                                    <div class="modal-body py-0">
+
+
+                                                        <div class="d-block main-content">
+                                                            <img src="/media/{{ ultimo.foto }}" alt="Image"
+                                                                 class="img-fluid"
+                                                                 style="background-color: #b2fcff;">
+                                                            <div class="content-text p-4">
+
+                                                                <h3 class="mb-4">{{ ultimo.nombre }}</h3>
+                                                                <p class="mb-4">{{ ultimo.descripcion }}</p>
+                                                                <div class="d-flex">
+                                                                    <div class="ml-auto">
+                                                                        <a href="#ultimo{{ ultimo.pk }}" class="btn btn-primary px-4">Entendido!</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="speakers-info">
+                                            <h5 class="speakers-title mb-0">{{ ultimo.nombre }}</h5>
+
+                                            <p class="speakers-text mb-0">{{ ultimo.fecha_nacimiento }}
+                                                - {{ ultimo.fecha_muerte }}</p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <section class="schedule section-padding" id="section_4">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-12 col-12">
+                        <h2 class="mb-5 text-center">Generacion<u class="text-info">es</u></h2>
+
+                        <nav>
+                            <div class="nav nav-tabs align-items-baseline" id="nav-tab" role="tablist">
+                                {% for generacion in generaciones %}
+                                    {% if forloop.first %}
+                                        <button class="nav-link active" id="nav-generacion{{ generacion.pk }}-tab"
+                                                data-bs-toggle="tab"
+                                                data-bs-target="#nav-generacion{{ generacion.pk }}" type="button"
+                                                role="tab"
+                                                aria-controls="nav-generacion{{ generacion.pk }}" aria-selected="true">
+                                            <h3>
+                                                <span>{{ generacion.nombre }}</span>
+                                                <small>{{ generacion.fecha_inicio }}
+                                                    - {{ generacion.fecha_fin }}</small>
+                                            </h3>
+                                        </button>
+                                    {% else %}
+
+                                        <button class="nav-link" id="nav-generacion{{ generacion.pk }}-tab"
+                                                data-bs-toggle="tab"
+                                                data-bs-target="#nav-generacion{{ generacion.pk }}" type="button"
+                                                role="tab"
+                                                aria-controls="nav-generacion{{ generacion.pk }}"
+                                                aria-selected="false">
+                                            <h3>
+                                                <span>{{ generacion.nombre }}</span>
+                                                <small>{{ generacion.fecha_inicio }}
+                                                    - {{ generacion.fecha_fin }}</small>
+                                            </h3>
+                                        </button>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </nav>
+
+                        <div class="tab-content mt-5" id="nav-tabContent">
+                            {% for generacion in generaciones %}
+                                {% if forloop.first %}
+                                    <div class="tab-pane fade show active" id="nav-generacion{{ generacion.pk }}"
+                                         role="tabpanel" aria-labelledby="nav-generacion{{ generacion.pk }}-tab">
+
+                                        {% for maquina in generacion.maquina_set.all %}
+                                            {% if forloop.last %}
+                                                <div style="text-align: center">
+                                                    <span class="dimensionador" id="maquina{{ maquina.pk }}">-</span>
+                                                </div>
+                                                <div id="rowmaquina{{ maquina.pk }}" class="row">
+                                                    <div class="col-lg-4 col-12">
+                                                        <img src="/media/{{ maquina.foto }}"
+                                                             class="schedule-image img-fluid" alt="">
+                                                    </div>
+
+                                                    <div class="col-lg-8 col-12 mt-3 mt-lg-0">
+                                                        <h4 class="mb-2">
+
+                                                            {{ maquina.nombre }}
+                                                        </h4>
+
+                                                        {{ maquina.descripcion|safe }}
+
+                                                        <div class="d-flex align-items-center mt-4">
+
+                                                    <span class="mx-3 mx-lg-5">
+                                                        <i class="bi-clock me-2"></i>
+                                                        {{ maquina.fecha_creacion }}
+                                                    </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% else %}
+                                                <div style="text-align: center">
+                                                    <span class="dimensionador" id="maquina{{ maquina.pk }}">-</span>
+                                                </div>
+                                                <div id="rowmaquina{{ maquina.pk }}"
+                                                     class="row border-bottom pb-5 mb-5">
+                                                    <div class="col-lg-4 col-12">
+                                                        <img src="/media/{{ maquina.foto }}"
+                                                             class="schedule-image img-fluid" alt="">
+                                                    </div>
+
+                                                    <div class="col-lg-8 col-12 mt-3 mt-lg-0">
+
+                                                        <h4 class="mb-2">
+
+                                                            {{ maquina.nombre }}
+                                                        </h4>
+
+                                                        <p>{{ maquina.descripcion|safe }}</p>
+
+                                                        <div class="d-flex align-items-center mt-4">
+                                                    <span class="mx-3 mx-lg-5">
+                                                    <i class="bi-clock me-2"></i>
+                                                    {{ maquina.fecha_creacion }}
+                                                    </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <div class="tab-pane fade" id="nav-generacion{{ generacion.pk }}" role="tabpanel"
+                                         aria-labelledby="nav-generacion{{ generacion.pk }}-tab">
+                                        {% for maquina in generacion.maquina_set.all %}
+                                            {% if forloop.last %}
+                                                <div style="text-align: center">
+                                                    <span class="dimensionador" id="maquina{{ maquina.pk }}">-</span>
+                                                </div>
+                                                <div id="rowmaquina{{ maquina.pk }}" class="row">
+                                                    <div class="col-lg-4 col-12">
+                                                        <img src="/media/{{ maquina.foto }}"
+                                                             class="schedule-image img-fluid" alt="">
+                                                    </div>
+
+                                                    <div class="col-lg-8 col-12 mt-3 mt-lg-0">
+                                                        <h4 class="mb-2">
+                                                            {{ maquina.nombre }}
+                                                        </h4>
+
+                                                        {{ maquina.descripcion|safe }}
+
+                                                        <div class="d-flex align-items-center mt-4">
+                                                            <span class="mx-3 mx-lg-5">
+                                                                <i class="bi-clock me-2"></i>
+                                                                {{ maquina.fecha_creacion }}
+                                                            </span>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% else %}
+                                                <div style="text-align: center">
+                                                    <span class="dimensionador" id="maquina{{ maquina.pk }}">-</span>
+                                                </div>
+                                                <div id="rowmaquina{{ maquina.pk }}"
+                                                     class="row border-bottom pb-5 mb-5">
+                                                    <div class="col-lg-4 col-12">
+                                                        <img src="/media/{{ maquina.foto }}"
+                                                             class="schedule-image img-fluid" alt="">
+                                                    </div>
+
+                                                    <div class="col-lg-8 col-12 mt-3 mt-lg-0">
+
+                                                        <h4 class="mb-2">
+                                                            {{ maquina.nombre }}
+                                                        </h4>
+
+                                                        {{ maquina.descripcion|safe }}
+
+                                                        <div class="d-flex align-items-center mt-4">
+                                                    <span class="mx-3 mx-lg-5">
+                                                    <i class="bi-clock me-2"></i>
+                                                    {{ maquina.fecha_creacion }}
+                                                </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="call-to-action section-padding">
+            <div class="container">
+                <div class="row align-items-center">
+
+                    <div class="col-lg-12 col-12">
+                        <h2 class="text-white mb-4 paralax paralax-frase">{{ banner.frase }}</h2>
+                        <p class="text-white paralax paralax-autor">{{ banner.autor }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="about section-padding" id="section_99">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-10 col-12">
+                        <h2 class="mb-4">La Informática <u class="text-info">en Cuba</u></h2>
+                    </div>
+
+                    <div class="col-lg-12 col-12">
+                        {{ informatica_cuba|truncatewords:150 }}
+                        <br>
+                        <a class="custom-btn btn custom-link mt-3" href="{% url 'informatica_cuba_detalles ' %}">Leer
+                            más</a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% endblock %}
+{% block extra-scripts %}
+    <script src="{% static 'principal/modal/js/popper.min.js' %}"></script>
+    <script src="{% static 'principal/modal/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'principal/modal/js/popper.min.js' %}js/main.js"></script>
+    <script>
+        {% for generacion in generaciones %}
+            {% for maquina in generacion.maquina_set.all %}
+                $('#maquina{{ maquina.pk }}').click(function () {
+                    if ($('#maquina{{ maquina.pk }}').html() === '-') {
+                        $('#maquina{{ maquina.pk }}').html('+ {{ maquina.nombre }}');
+                        $('#rowmaquina{{ maquina.pk }}').hide('fast')
+                    } else {
+                        $('#maquina{{ maquina.pk }}').html('-');
+                        $('#rowmaquina{{ maquina.pk }}').show('fast')
+                    }
+
+                });
+            {% endfor %}
+        {% endfor %}
+    </script>
+{% endblock %}

@@ -1,0 +1,28 @@
+.fecha {
+    font-size: 30px;
+}
+
+.dimensionador {
+    cursor: pointer;
+    background-color: #0dcaf0;
+    font-size: 30px;
+    padding: 0 13px;
+    border-radius: 29px;
+    color: white;
+}
+
+.paralax-autor{
+    text-align: right;
+}
+
+.personalidades::-webkit-scrollbar {
+  display: none;
+}
+
+.personalidades{
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    max-height: 650px;
+    overflow-y: scroll;
+}
+

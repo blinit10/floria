@@ -1,0 +1,51 @@
+{% extends 'principal/base.html' %}
+{% load static %}
+{% block extra-estilos %}
+    <style>
+        .call-to-action {
+            background-image: url(/media/{{ banner.imagen }});
+            background-repeat: no-repeat;
+            background-position: top;
+            background-size: cover;
+            background-attachment: fixed;
+            position: relative;
+        }
+    </style>
+{% endblock %}
+{% block contenido %}
+    <main>
+        <section class="about section-padding" id="section_2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 col-12">
+                        <h2 class="mb-4">Antecedentes de la <u class="text-info">Informática</u></h2>
+                    </div>
+
+                    <div class="col-lg-12 col-12">
+                        {{ antecedentes }}
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% endblock %}
+{% block extra-scripts %}
+    <script>
+        {% for generacion in generaciones %}
+            {% for maquina in generacion.maquina_set.all %}
+                $('#maquina{{ maquina.pk }}').click(function () {
+                    if ($('#maquina{{ maquina.pk }}').html() === '-') {
+                        $('#maquina{{ maquina.pk }}').html('+ {{ maquina.nombre }}');
+                        $('#rowmaquina{{ maquina.pk }}').hide('fast')
+                    } else {
+                        $('#maquina{{ maquina.pk }}').html('-');
+                        $('#rowmaquina{{ maquina.pk }}').show('fast')
+                    }
+
+                });
+            {% endfor %}
+        {% endfor %}
+    </script>
+{% endblock %}

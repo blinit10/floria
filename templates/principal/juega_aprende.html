@@ -1,0 +1,209 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="{% static 'principal/juega_aprende/styles.css' %}" rel="stylesheet">
+    {#    <script defer src="{% static 'principal/juega_aprende/script.js' %}"></script>#}
+    <title>Juega y Aprende</title>
+</head>
+<body>
+<div class="container" id="container-superior">
+    <h1 style="text-align: center">Vidas <span id="CantVidas">3</span>
+        <hr>
+        Puntos <span id="CantPuntos">0</span>
+        <hr>
+        Jugador
+        <form>{% csrf_token %}<input type="text" maxlength="14" id="jugador"/></form>
+    </h1>
+</div>
+<div class="container">
+    <div id="question-container" class="hide">
+        <div id="question">Question</div>
+        <div id="answer-buttons" class="btn-grid">
+            <button class="btn">Answer 1</button>
+            <button class="btn">Answer 2</button>
+            <button class="btn">Answer 3</button>
+            <button class="btn">Answer 4</button>
+        </div>
+    </div>
+    <div class="controls">
+        <button id="start-btn" class="start-btn btn">Comenzar</button>
+        <button id="next-btn" class="next-btn btn hide">Siguiente</button>
+    </div>
+</div>
+<script src="{% static 'principal/js/jquery.min.js' %}"></script>
+<script>
+    const startButton = document.getElementById('start-btn')
+    const nextButton = document.getElementById('next-btn')
+    const questionContainerElement = document.getElementById('question-container')
+    const questionElement = document.getElementById('question')
+    const answerButtonsElement = document.getElementById('answer-buttons')
+    const vidas = document.getElementById('CantVidas')
+
+    let shuffledQuestions, currentQuestionIndex
+
+    startButton.addEventListener('click', startGame)
+    nextButton.addEventListener('click', () => {
+        currentQuestionIndex++
+        setNextQuestion()
+    })
+
+    function startGame() {
+        startButton.classList.add('hide')
+        shuffledQuestions = questions.sort(() => Math.random() - .5)
+        currentQuestionIndex = 0
+        questionContainerElement.classList.remove('hide')
+        setNextQuestion()
+    }
+
+    function setNextQuestion() {
+        resetState()
+        if (shuffledQuestions.length === currentQuestionIndex) {
+            shuffledQuestions = questions.sort(() => Math.random() - .5)
+            currentQuestionIndex = 0;
+        }
+        showQuestion(shuffledQuestions[currentQuestionIndex])
+
+    }
+
+    function showQuestion(question) {
+        questionElement.innerText = question.question
+        question.answers.forEach(answer => {
+            const button = document.createElement('button')
+            button.innerText = answer.text
+            button.classList.add('btn')
+            if (answer.correct) {
+                button.dataset.correct = answer.correct
+            }
+            button.addEventListener('click', selectAnswer)
+            answerButtonsElement.appendChild(button)
+        })
+    }
+
+    function resetState() {
+        clearStatusClass(document.body)
+        nextButton.classList.add('hide')
+        while (answerButtonsElement.firstChild) {
+            answerButtonsElement.removeChild(answerButtonsElement.firstChild)
+        }
+    }
+
+    function selectAnswer(e) {
+        const selectedButton = e.target
+        const correct = selectedButton.dataset.correct
+        if (correct) {
+            $('#CantPuntos').html(parseInt($('#CantPuntos').html()) + 1)
+        } else {
+            $('#CantVidas').html(parseInt($('#CantVidas').html()) - 1)
+        }
+        block_screen()
+        setStatusClass(document.body, correct)
+        Array.from(answerButtonsElement.children).forEach(button => {
+            setStatusClass(button, button.dataset.correct)
+        })
+
+        if ($('#CantVidas').html() > 0) {
+
+            nextButton.classList.remove('hide')
+        } else {
+            var nombre = "Anónimo"
+            if ($('#jugador').val().length !== 0) {
+                nombre = $('#jugador').val();
+            }
+            $.ajax({
+                url: "/puntuaciones/",
+                type: "POST",
+                data: {
+                    csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                    'nombre': nombre,
+                    'puntos': $('#CantPuntos').html(),
+                },
+                dataType: "json",
+                success: function (data) {
+                    window.location.replace('/puntuaciones/')
+                }
+            });
+        }
+    }
+
+    function setStatusClass(element, correct) {
+        clearStatusClass(element)
+        if (correct) {
+            element.classList.add('correct')
+        } else {
+            element.classList.add('wrong')
+
+        }
+    }
+
+    function clearStatusClass(element) {
+        element.classList.remove('correct')
+        element.classList.remove('wrong')
+    }
+
+    const questions = [
+        {% for pregunta in preguntas %}
+            {% if forloop.last %}
+                {
+                    question: '{{ pregunta.pregunta }}',
+                    answers: [
+                        {% for respuesta in pregunta.respuesta_set.all %}
+                            {% if forloop.last %}
+                                {
+                                    text: '{{respuesta.respuesta}}',
+                                    correct: {% if respuesta.correcta == True %}true{% else %}false{% endif %}
+                                }
+                            {% else %}
+                                {
+                                    text: '{{respuesta.respuesta}}',
+                                    correct: {% if respuesta.correcta == True %}true{% else %}false{% endif %}
+                                },
+                            {% endif %}
+                        {% endfor %}
+                    ]
+                }
+            {% else %}
+                {
+                    question: '{{ pregunta.pregunta }}',
+                    answers: [
+                        {% for respuesta in pregunta.respuesta_set.all %}
+                            {% if forloop.last %}
+                                {
+                                    text: '{{respuesta.respuesta}}',
+                                    correct: {% if respuesta.correcta == True %}true{% else %}false{% endif %}
+                                }
+                            {% else %}
+                                {
+                                    text: '{{respuesta.respuesta}}',
+                                    correct: {% if respuesta.correcta == True %}true{% else %}false{% endif %}
+                                },
+                            {% endif %}
+                        {% endfor %}
+                    ]
+                },
+            {% endif %}
+        {% endfor %}
+    ]
+
+    function unblock_screen() {
+        $('#screenBlock').animate({opacity: 0}, 200, function () {
+            $('#screenBlock').remove();
+        });
+    }
+
+    function block_screen() {
+        $('<div id="screenBlock"></div>').appendTo('#answer-buttons');
+        $('#screenBlock').css({
+            opacity: 0, width: $('#answer-buttons').width(),
+            height: $('#answer-buttons').height(), top: $('#screenBlock').parent().position().top,
+            left: $('#screenBlock').parent().position().left
+        });
+        $('#screenBlock').addClass('blockDiv');
+        $('#screenBlock').animate({opacity: 0.7}, 200);
+    }
+</script>
+</body>
+</html>

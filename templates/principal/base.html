@@ -1,0 +1,146 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Recurso Educativo Digital de La Historia de la Informática">
+    <meta name="author" content="Floria María Cala Montelier">
+
+    <title>Historia de la Informática ICI</title>
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link href="{% static 'principal/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'principal/css/bootstrap-icons.css' %}" rel="stylesheet">
+
+    <link href="{% static 'principal/css/templatemo-leadership-event.css' %}" rel="stylesheet">
+    <link href="{% static 'principal/css/custom.css' %}" rel="stylesheet">
+    {% block extra-estilos %}
+    {% endblock %}
+    <!--
+
+    TemplateMo 575 Leadership Event
+
+    https://templatemo.com/tm-575-leadership-event
+
+    -->
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a href="index.html" class="navbar-brand mx-auto mx-lg-0">
+            <i class="bi-pc-display brand-logo"></i>
+            <span class="brand-text">Historia <br> de la Informática</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="{% if flag == True %}/#section_1{% else %}#section_1{% endif %}">Inicio</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="{% if flag == True %}/#section_2{% else %}#section_2{% endif %}">Antecedentes</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="{% if flag == True %}/#section_3{% else %}#section_3{% endif %}">Personalidades</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="{% if flag == True %}/#section_4{% else %}#section_4{% endif %}">Generaciones</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="{% if flag == True %}/#section_99{% else %}#section_99{% endif %}">Informatica en Cuba</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="{% url 'juega_aprende' %}">Juega y Aprende</a>
+                </li>
+            </ul>
+            <div>
+
+            </div>
+        </div>
+    </div>
+</nav>
+
+{% block contenido %}
+{% endblock %}
+<footer class="site-footer">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <div class="col-lg-12 col-12 border-bottom pb-5 mb-5">
+                <div class="d-flex">
+                    <a href="index.html" class="navbar-brand">
+                        <i class="bi-pc-display brand-logo"></i>
+                        <span class="brand-text">Historia <br> de la Informática</span>
+                    </a>
+
+                    <ul class="social-icon ms-auto">
+                        <li><a href="#" class="social-icon-link bi-facebook"></a></li>
+
+                        <li><a href="#" class="social-icon-link bi-twitter"></a></li>
+
+                        <li><a href="#" class="social-icon-link bi-linkedin"></a></li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-12 ms-lg-auto">
+                <div class="copyright-text-wrap d-flex align-items-center">
+                    <p class="copyright-text ms-lg-auto me-4 mb-0">Copyright © 2022 Universidad de las Ciencias
+                        Informáticas
+
+                        <br>Todos los derechos reservados.
+
+                        <br><br>Desarrollado por: Floria María Cala Montelier</p>
+
+                    <a href="#section_1" class="bi-arrow-up arrow-icon custom-link"></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+<!-- JAVASCRIPT FILES -->
+<script src="{% static 'principal/js/jquery.min.js' %}"></script>
+<script src="{% static 'principal/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'principal/js/jquery.sticky.js' %}"></script>
+<script src="{% static 'principal/js/click-scroll.js' %}"></script>
+<script src="{% static 'principal/js/custom.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = mm + '/' + dd + '/' + yyyy;
+        $('#fechaactual').html(today)
+    });
+</script>
+{% block extra-scripts %}
+{% endblock %}
+</body>
+</html>
