@@ -27,5 +27,6 @@ urlpatterns = [
     path('informatica en cuba/', informatica_cuba_detalles, name = 'informatica_cuba_detalles '),
     path('juega y aprende/', juega_aprende, name = 'juega_aprende'),
     path('puntuaciones/', puntuaciones, name = 'puntuaciones'),
+    path('linea/', linea, name = 'linea_temporal'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 admin.site.site_header = 'Panel de Control'

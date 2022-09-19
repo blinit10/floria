@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
     <data-source source="LOCAL" name="db" uuid="5fc9a9c0-b91a-4e1c-abbb-03e042ab3731">
-      <driver-ref>7619c837-954b-4ad0-bdbb-d5915ecf040a</driver-ref>
+      <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:C:\Users\Ro\Documents\Proyectos\REDHI\db.sqlite3</jdbc-url>
@@ -20,6 +20,27 @@
       <jdbc-url>jdbc:sqlite:\\192.168.1.103\Users\Ro\Documents\Proyectos\REDHI\db.sqlite3</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
       <libraries>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.34.0/sqlite-jdbc-3.34.0.jar</url>
+        </library>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.25.1/license.txt</url>
+        </library>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.25.1/sqlite-jdbc-3.25.1.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+    <data-source source="LOCAL" name="db [3]" uuid="aaa5f479-b428-4184-a39e-3fdde53f7e72">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:F:\Desarrollo\floria\db.sqlite3</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+      <libraries>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.36.0.3/sqlite-jdbc-3.36.0.3.jar</url>
+        </library>
         <library>
           <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.34.0/sqlite-jdbc-3.34.0.jar</url>
         </library>

@@ -128,3 +128,16 @@ class Jugador(models.Model):
         verbose_name = 'Jugador'
         verbose_name_plural = 'Jugadores'
         app_label = 'trivia'
+
+class Nodo(models.Model):
+    fecha = models.DateField()
+    evento = models.CharField(max_length=255)
+    imagen = models.ImageField(upload_to='nodos/', null=True, blank=True, help_text='Opcional')
+
+    def __str__(self):
+        return '{}'.format(self.evento)
+
+    class Meta:
+        verbose_name = 'Nodo de línea temporal'
+        verbose_name_plural = 'Nodos de línea temporal'
+        app_label = 'sistema'

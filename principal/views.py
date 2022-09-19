@@ -35,12 +35,6 @@ def puntuaciones(request):
     if request.method == 'POST':
         jugador = Jugador(nombre=request.POST['nombre'], puntuacion=int(request.POST['puntos']))
         jugador.save()
-        # jugadores = {}
-        # for player in Jugador.objects.order_by('-puntuacion'):
-        #     jugadores[player.pk] = []
-        #     jugadores[player.pk].append(player.nombre)
-        #     jugadores[player.pk].append(player.puntuacion)
-        #     jugadores[player.pk].append(player.hora)
         return JsonResponse(data={'satus':200}, safe=False)
     pares = {}
     for player in Jugador.objects.all():
@@ -51,3 +45,17 @@ def puntuaciones(request):
         pares[player.pk].append('#%02X%02X%02X' % (s(), s(), s()))
     return render(request, 'principal/puntuaciones.html', {'jugadores':Jugador.objects.order_by('-puntuacion'),
                                                            'pares':pares})
+
+def linea(request):
+    nodos = Nodo.objects.order_by('fecha')
+    imagenes = {}
+    lote = []
+    contador = 0
+    for nodo in nodos:
+        imagen = str(nodo.imagen)
+        lote.append(imagen)
+        contador = contador + 1
+        if contador % 4 == 0:
+            imagenes[contador] = lote
+            lote = []
+    return render(request, 'principal/linea.html',{'nodos':nodos,'imagenes':imagenes})

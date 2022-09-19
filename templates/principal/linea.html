@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Linea Temporal</title>
+    <link href="{% static 'principal/linea/estilos.css' %}" rel="stylesheet">
+    <style>
+        {% for nodo in nodos %}
+            {% if forloop.counter|divisibleby:4 %}
+                #slider{{ forloop.counter }} {
+                    position: relative;
+                    overflow: hidden;
+                    margin: 20px auto 0 auto;
+                    border-radius: 4px;
+                }
+
+                #slider{{ forloop.counter }} ul {
+                    position: relative;
+                    margin: 0;
+                    padding: 0;
+                    height: 200px;
+                    list-style: none;
+                }
+
+                #slider{{ forloop.counter }} ul li {
+                    position: relative;
+                    display: block;
+                    float: left;
+                    margin: 0;
+                    padding: 0;
+                    width: 500px;
+                    height: 300px;
+                    background: #ccc;
+                    text-align: center;
+                    line-height: 300px;
+                }
+
+                a.control_prev{{ forloop.counter }}, a.control_next{{ forloop.counter }} {
+                    position: absolute;
+                    top: 40%;
+                    z-index: 999;
+                    display: block;
+                    padding: 4% 3%;
+                    width: auto;
+                    height: auto;
+                    background: #2a2a2a;
+                    color: #fff;
+                    text-decoration: none;
+                    font-weight: 600;
+                    font-size: 18px;
+                    opacity: 0.8;
+                    cursor: pointer;
+                }
+
+                a.control_prev{{ forloop.counter }}:hover, a.control_next{{ forloop.counter }}:hover {
+                    opacity: 1;
+                    -webkit-transition: all 0.2s ease;
+                }
+
+                a.control_prev{{ forloop.counter }} {
+                    border-radius: 0 2px 2px 0;
+                }
+
+                a.control_next{{ forloop.counter }} {
+                    right: 0;
+                    border-radius: 2px 0 0 2px;
+                }
+
+                .slider_option {
+                    position: relative;
+                    margin: 10px auto;
+                    width: 160px;
+                    font-size: 18px;
+                }
+            {% endif %}
+        {% endfor %}
+    </style>
+</head>
+<body>
+<main>
+    <h1 style="text-align: center">Toda la Historia de la Informática Cubana en el mismo lugar {{ imagenes.keys }}</h1>
+    <section>
+        <div class="grid-wrapper">
+            {% for nodo in nodos %}
+                {% if forloop.counter|divisibleby:4 %}
+                    <article>
+
+                        <h3>{{ nodo.fecha }}</h3>
+                        <p>{{ nodo.evento }}</p>
+                        <div id="slider{{ forloop.counter }}">
+                            <a href="#" class="control_next{{ forloop.counter }}">>></a>
+                            <a href="#" class="control_prev{{ forloop.counter }}"><</a>
+                            <ul>
+                                {% for key, value in imagenes.items %}
+                                    {% if key == forloop.parentloop.counter %}
+                                        {% for item in value %}
+                                            {% if item != '' %}
+                                                <li><img alt="Imagen" src="/media/{{ item }}"></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </article>
+                {% else %}
+                    <article>
+                        <h3>{{ nodo.fecha }}</h3>
+                        <p>{{ nodo.evento }}</p>
+                    </article>
+                {% endif %}
+                {% if forloop.counter|divisibleby:8 %}
+                    </div>
+                    </section>
+                    <section>
+                    <div class="grid-wrapper">
+                {% endif %}
+
+            {% endfor %}
+            </div>
+            </section>
+
+    <p class="footer-note"><a href="{% url 'index' %}">Regresar</a></p>
+</main>
+<script src="{% static 'principal/js/jquery.min.js' %}"></script>
+<script>
+        jQuery(document).ready(function ($) {
+
+    {% for nodo in nodos %}
+        {% if forloop.counter|divisibleby:4 %}
+            var slideCount = $('#slider{{ forloop.counter }} ul li').length;
+            var slideWidth = $('#slider{{ forloop.counter }} ul li').width();
+            var slideHeight = $('#slider{{ forloop.counter }} ul li').height();
+            var sliderUlWidth = slideCount * slideWidth;
+            $('#slider{{ forloop.counter }}').css({width: slideWidth, height: slideHeight});
+
+            $('#slider{{ forloop.counter }} ul').css({width: sliderUlWidth, marginLeft: -slideWidth});
+
+            $('#slider{{ forloop.counter }} ul li:last-child').prependTo('#slider{{ forloop.counter }} ul');
+
+            function moveLeft{{ forloop.counter }}() {
+                $('#slider{{ forloop.counter }} ul').animate({
+                    left: +slideWidth
+                }, 200, function () {
+                    $('#slider{{ forloop.counter }} ul li:last-child').prependTo('#slider{{ forloop.counter }} ul');
+                    $('#slider{{ forloop.counter }} ul').css('left', '');
+                });
+            };
+
+            function moveRight{{ forloop.counter }}() {
+                $('#slider{{ forloop.counter }} ul').animate({
+                    left: -slideWidth
+                }, 200, function () {
+                    $('#slider{{ forloop.counter }} ul li:first-child').appendTo('#slider{{ forloop.counter }} ul');
+                    $('#slider{{ forloop.counter }} ul').css('left', '');
+                });
+            };
+
+            $('a.control_prev{{ forloop.counter }}').click(function () {
+                moveLeft{{ forloop.counter }}();
+            });
+
+            $('a.control_next{{ forloop.counter }}').click(function () {
+                moveRight{{ forloop.counter }}();
+            });
+
+        {% endif %}
+    {% endfor %}
+    });
+
+
+</script>
+</body>
+</html>

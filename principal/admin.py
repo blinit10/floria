@@ -82,12 +82,18 @@ class JugadorAdmin(admin.ModelAdmin):
         }),
     )
 
+class NodoAdmin(admin.ModelAdmin):
+    list_display = ['fecha', 'evento']
+    list_display_links = ['fecha', 'evento']
+
+
 # Register your models here.
 admin.site.register(AntecedentesInformatica)
 admin.site.register(PersonalidadDestacada, PersonalidadDestacadaAdmin)
 admin.site.register(Generacion, GeneracionAdmin)
 admin.site.register(InformaticaCuba)
 admin.site.register(Banner)
+admin.site.register(Nodo, NodoAdmin)
 admin.site.register(Pregunta, PreguntaAdmin)
 admin.site.register(Jugador, JugadorAdmin)
 
