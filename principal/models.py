@@ -141,3 +141,23 @@ class Nodo(models.Model):
         verbose_name = 'Nodo de línea temporal'
         verbose_name_plural = 'Nodos de línea temporal'
         app_label = 'sistema'
+
+class LugarInteres(models.Model):
+    nombre = models.CharField(max_length=255)
+    img_principal = models.ImageField(upload_to='tours/')
+    direccion = models.TextField()
+    descripcion = models.TextField(verbose_name='Descripción')
+    tour = models.TextField(help_text='Pega aquí el código embebido de https://momento360.com/')
+    visible = models.BooleanField(default=False)
+
+    def __str__(self):
+        return '{}'.format(self.nombre)
+
+    class Meta:
+        verbose_name = 'Lugar de interés'
+        verbose_name_plural = 'Lugares de interés'
+        app_label = 'principal'
+
+
+
+

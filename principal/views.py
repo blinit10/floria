@@ -1,7 +1,7 @@
 import random
 from typing import re
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 
 from .models import *
@@ -25,7 +25,14 @@ def antecedentes_detalles(request):
 
 def informatica_cuba_detalles(request):
     informatica_cuba = mark_safe(InformaticaCuba.objects.all()[0].texto)
-    return render(request, 'principal/informatica_cuba_detail.html', {'informatica_cuba': informatica_cuba,'flag':True})
+    primero = LugarInteres.objects.filter(visible=True)[0]
+    tours = LugarInteres.objects.filter(visible=True)[1:len(LugarInteres.objects.filter(visible=True))]
+    return render(request, 'principal/informatica_cuba_detail.html', {'informatica_cuba': informatica_cuba,'flag':True,
+                                                                      'primero':primero, 'tours':tours})
+
+def visita(request, tour_id):
+    tour = get_object_or_404(LugarInteres, pk=tour_id)
+    return render(request, 'principal/tour.html', {'tour': tour,'flag':True})
 
 def juega_aprende(request):
     preguntas = Pregunta.objects.all()
@@ -59,3 +66,4 @@ def linea(request):
             imagenes[contador] = lote
             lote = []
     return render(request, 'principal/linea.html',{'nodos':nodos,'imagenes':imagenes})
+

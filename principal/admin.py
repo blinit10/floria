@@ -86,6 +86,18 @@ class NodoAdmin(admin.ModelAdmin):
     list_display = ['fecha', 'evento']
     list_display_links = ['fecha', 'evento']
 
+class LugarInteresAdmin(admin.ModelAdmin):
+    list_display = ['nombre', 'direccion', 'visible']
+    list_display_links = ['nombre', 'direccion', 'visible']
+    fieldsets = (
+        ('Datos principales', {
+            'fields': (('nombre', 'visible'),'direccion', 'descripcion')
+        }),
+        ('Multimedia', {
+            'fields': ('img_principal', 'tour')
+        }),
+    )
+
 
 # Register your models here.
 admin.site.register(AntecedentesInformatica)
@@ -96,4 +108,5 @@ admin.site.register(Banner)
 admin.site.register(Nodo, NodoAdmin)
 admin.site.register(Pregunta, PreguntaAdmin)
 admin.site.register(Jugador, JugadorAdmin)
+admin.site.register(LugarInteres, LugarInteresAdmin)
 

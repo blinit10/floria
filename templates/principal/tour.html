@@ -1,0 +1,43 @@
+{% extends 'principal/base.html' %}
+{% load static %}
+{% block extra-estilos %}
+    <style>
+        .call-to-action {
+            background-image: url(/media/{{ banner.imagen }});
+            background-repeat: no-repeat;
+            background-position: top;
+            background-size: cover;
+            background-attachment: fixed;
+            position: relative;
+        }
+    </style>
+{% endblock %}
+{% block contenido %}
+    <main>
+        <section class="about section-padding" style="padding: 0" id="section_99">
+            <iframe src="{{ tour.tour }}" frameborder="0" width="100%" style="height: 35em !important;"></iframe>
+        </section>
+    </main>
+
+{% endblock %}
+{% block extra-scripts %}
+    <script src="{% static 'principal/modal/js/popper.min.js' %}"></script>
+    <script src="{% static 'principal/modal/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'principal/modal/js/popper.min.js' %}js/main.js"></script>
+    <script>
+        {% for generacion in generaciones %}
+            {% for maquina in generacion.maquina_set.all %}
+                $('#maquina{{ maquina.pk }}').click(function () {
+                    if ($('#maquina{{ maquina.pk }}').html() === '-') {
+                        $('#maquina{{ maquina.pk }}').html('+ {{ maquina.nombre }}');
+                        $('#rowmaquina{{ maquina.pk }}').hide('fast')
+                    } else {
+                        $('#maquina{{ maquina.pk }}').html('-');
+                        $('#rowmaquina{{ maquina.pk }}').show('fast')
+                    }
+
+                });
+            {% endfor %}
+        {% endfor %}
+    </script>
+{% endblock %}
